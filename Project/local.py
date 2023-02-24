@@ -9,31 +9,29 @@ while True:
                 text = input()
                 if text == 'qq':
                     break
-                res = requests.get(f"http://127.0.0.1:3000/api/courses/{text}")
+                res = requests.get(f"http://127.0.0.1:3000/api/city-info/{text}")
                 print(res.json())
     elif text == 'delete':
         while True:
                 text = input()
                 if text == 'qq':
                     break
-                res = requests.delete(f"http://127.0.0.1:3000/api/courses/{int(text)}")
+                res = requests.delete(f"http://127.0.0.1:3000/api/city-info/{text}")
                 print(res.json())
     elif text == 'post':
         while True:
-                id = int(input('Введите id курса:'))
-                name = input('Введите имя курса:')
-                vid = int(input('Введите кол-во видео в курсе:'))
+                id = input('Введите id города:')
+                name = input('Введите название города:')
                 if name == 'qq':
                     break
-                res = requests.post(f"http://127.0.0.1:3000/api/courses/{id}", json={'name': name, 'vid': vid})
+                res = requests.post(f"http://127.0.0.1:3000/api/city-info/{id}", json={'name': name, 'id': id})
                 print(res.json())
     elif text == 'put':
         while True:
-                id = int(input('Введите id курса:'))
-                name = input('Введите имя курса:')
-                vid = int(input('Введите кол-во видео в курсе:'))
+                id = input('Введите id города, который вы хотите изменить:')
+                name = input('Введите новое название города:')
                 if name == 'qq':
                     break
-                res = requests.post(f"http://127.0.0.1:3000/api/courses/{id}", json={'name': name, 'vid': vid})
+                res = requests.put(f"http://127.0.0.1:3000/api/city-info/{id}", json={'name': name, 'id': id})
                 print(res.json())
 
