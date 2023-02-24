@@ -8,7 +8,7 @@ def check_db():
     WHERE type='table'
     ''')
     table = cursor.fetchall()
-    if 'Cities' not in table[0]:
+    if 'Cities' not in table:
         create_base_table()
 
 def check_data_in(num):
