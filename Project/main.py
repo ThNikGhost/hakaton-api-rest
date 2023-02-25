@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api, Resource
 from flask import render_template
 import requests
+import sqlite3 as sq
 
 app = Flask(__name__)
 api = Api()
@@ -21,13 +22,31 @@ class Main(Resource):
             return 'Incorect name'    #Если неверное имя города, то возвращает эту строку 
         return city_info
 
+class City(Resource):
+    def get(self, lang):
+        with sq.connect('City.sqlite3') as con:
+            cur = con.cursor()
+            cur.execute(f'''SELECT ru_name
+                        FROM City_name
+                                    ''')
+            data_list = get_list_db(cur.fetchall())
+        return data_list
+
+def get_list_db(data: list):
+    new_list = []
+    for i in data:
+        for k in i:
+            new_list.append(k)
+    return new_list 
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
-
 api.add_resource(Main, '/api/main/<string:city>')
+api.add_resource(City, '/api/cities/<string:lang>')
 api.init_app(app)
 
 if __name__ == '__main__':
